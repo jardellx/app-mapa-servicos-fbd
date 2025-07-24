@@ -1,0 +1,14 @@
+# Ignorar ambiente virtual
+venv/
+.venv/
+
+# Ignorar variáveis de ambiente (contém senhas!)
+.env
+
+# Ignorar caches do Python
+__pycache__/
+*.pyc
+
+# Ignorar arquivos de dados ou logs sensíveis
+*.log
+*.sqlite
