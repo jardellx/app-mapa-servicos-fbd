@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 # ATENÇÃO: Substitua 'sua_senha_do_postgres' pela SUA SENHA REAL do PostgreSQL.
 # NUNCA use senhas diretamente no código para produção!
 DB_USER = os.getenv('DB_USER', 'postgres') 
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'sua_senha_do_postgres') # <--- COLOQUE SUA SENHA REAL AQUI!
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'jardel2011') # <--- COLOQUE SUA SENHA REAL AQUI!
 DB_HOST = os.getenv('DB_HOST', 'localhost') 
 DB_PORT = os.getenv('DB_PORT', '5432')
 DB_NAME = os.getenv('DB_NAME', 'mapaservicosbr') # Nome exato do seu banco de dados 'mapaservicosbr'
