@@ -1,37 +1,34 @@
 import os
-from sqlalchemy import create_engine, text # Importar 'text' para compatibilidade
+from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# --- Configurações do Banco de Dados ---
-# ATENÇÃO: Substitua 'sua_senha_do_postgres' pela SUA SENHA REAL do PostgreSQL.
-# NUNCA use senhas diretamente no código para produção!
+# =================================================================
+# PARTE 1: CONEXÃO COM O BANCO DE DADOS
+# =================================================================
+# ATENÇÃO: A sua senha está aqui.
 DB_USER = os.getenv('DB_USER', 'postgres') 
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'jardel2011') # <--- COLOQUE SUA SENHA REAL AQUI!
+DB_PASSWORD = os.getenv('DB_PASSWORD', 'jardel2011')
 DB_HOST = os.getenv('DB_HOST', 'localhost') 
 DB_PORT = os.getenv('DB_PORT', '5432')
-DB_NAME = os.getenv('DB_NAME', 'mapaservicosbr') # Nome exato do seu banco de dados 'mapaservicosbr'
+DB_NAME = os.getenv('DB_NAME', 'mapaservicosbr')
 
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 
+# Cria o "motor" de conexão
 engine = create_engine(DATABASE_URL)
-Base = declarative_base() # Base declarativa para todos os modelos ORM
+
+# Cria uma Base para os modelos declarativos
+Base = declarative_base()
+
+# Cria uma fábrica de sessões para interagir com o banco
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-def get_db():
-    """Retorna uma sessão de banco de dados para ser usada de forma segura."""
-    db = SessionLocal()
-    try:
-        yield db # Permite que a sessão seja usada em um bloco 'with'
-    finally:
-        db.close() # Garante que a sessão seja fechada após o uso
-
-# --- Teste de Conexão (Para rodar este arquivo diretamente e verificar a conexão) ---
+# Função para testar a conexão ao executar este ficheiro diretamente
 if __name__ == "__main__":
-    print("Tentando conectar ao banco de dados...")
     try:
         with engine.connect() as connection:
-            connection.execute(text("SELECT 1")) # Executa uma consulta simples para testar
-            print("Conexão bem-sucedida ao banco de dados!")
+            connection.execute(text("SELECT 1"))
+        print("✅ Conexão com o banco de dados bem-sucedida!")
     except Exception as e:
-        print(f"Erro ao conectar ao banco de dados: {e}")
-        print("Por favor, verifique as configurações (usuário, senha, host, porta, nome do banco) e se o PostgreSQL está rodando.")
+        print(f"❌ Erro ao conectar ao banco de dados: {e}")
+
